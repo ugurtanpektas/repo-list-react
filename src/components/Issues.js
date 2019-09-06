@@ -8,51 +8,54 @@ import Pagination from "./Pagination";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 
+
 const apiUrl = 'https://api.github.com/repos/reactjs/';
 
-class PullRequests extends React.Component{
-
+class Issiues extends React.Component{
+    
     componentDidMount(){
         this.props.paginationAction('REFRESH', true)
     }
     
-    getPulls = async () => {
+    getIssues = async () => {
         this.props.repoAction('LOADING');
         let pageNumber = qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).page ? qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).page : 1;
-        const getRepoPullsCall = await fetch(apiUrl+this.props.match.params.id+'/pulls?page='+pageNumber+'&per_page=5');
-        this.props.paginationAction('ACTIVE_PAGE', pageNumber);
-        this.props.paginationAction('PAGINATION_LINK', await getRepoPullsCall.headers.get('Link'));
-        this.props.paginationAction('PATH_LINK', `/repo/detail/${this.props.match.params.id}/pulls`)
-        const response = await getRepoPullsCall.json();
-        this.props.repoAction('GET_REPO_PULLS',response);
+        const getRepoIssuesCall = await fetch(apiUrl+this.props.match.params.id+'/issues?page='+pageNumber+'&per_page=5')
+        this.props.paginationAction('ACTIVE_PAGE', pageNumber)
+        this.props.paginationAction('PAGINATION_LINK', await getRepoIssuesCall.headers.get('Link'))
+        this.props.paginationAction('PATH_LINK', `/repo/detail/${this.props.match.params.id}/issues`)
+        const response = await getRepoIssuesCall.json();
+        this.props.repoAction('GET_REPO_ISSUES',response);
     }
 
     render(){
+        
         if(this.props.paginationState.refresh){
-            this.getPulls();
+            this.getIssues();
             this.props.paginationAction('REFRESH', false)
         }
+
         let html;
         if(this.props.repoState.loading){
             html = (
-                <div className="loading"> Pull Requests Loading...</div>
+                <div className="loading"> Issues Loading...</div>
             )
         }else{
             let emptyerror;
-            if(this.props.repoState.pullList.length <= 0 ){
+            if(this.props.repoState.issueList.length <= 0 ){
                 emptyerror = (
-                    <div>There is no pull requests</div>
+                    <div>There is no issue</div>
                 )
             }
             html = (
                 <div>
-                    <h1>"{this.props.match.params.id}" All Pull Requests</h1>
-                    {this.props.repoState.pullList.map((pullRequest) => {
+                    <h1>"{this.props.match.params.id}" All Issiues</h1>
+                    {this.props.repoState.issueList.map((issue) => {
                         return(
-                            <div className="item" key={pullRequest.id}>
-                                {pullRequest.title}
+                            <div className="item" key={issue.id}>
+                                {issue.title}
                                 <div className="sub-info">
-                                    <span className="info-item"><FontAwesomeIcon icon={faUser} className="icon" />{pullRequest.user.login}</span>
+                                    <span className="info-item"><FontAwesomeIcon icon={faUser} className="icon" />{issue.user.login}</span>
                                 </div>
                             </div>
                         )
@@ -63,7 +66,7 @@ class PullRequests extends React.Component{
             )
         }
         return(
-            <div className="pull-requests-wrapper">
+            <div className="issue-wrapper">
                 {html}
             </div>
         )
@@ -84,4 +87,4 @@ function mapDispatchToProps(dispatch){
     }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (PullRequests);
+export default connect(mapStateToProps, mapDispatchToProps) (Issiues);

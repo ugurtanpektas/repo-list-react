@@ -1,16 +1,24 @@
-import {combineReducers} from 'redux';
+const initialState = {
+    repoList : [],
+    repoDetail : [],
+    issueList : [],
+    pullList : [],
+    loading:true
+};
 
-export const repos = (state = {}, action) => {
+export default function repoReducer(state = initialState, action){
     switch(action.type){
-        case 'GET_REPOS_START':
-            return {};
+        case 'LOADING':
+            return {...state, loading:true};
         case 'GET_REPOS':
-            return action.repos;
+            return {...state, loading:false, repoList:action.payload};
+        case 'GET_REPO_ISSUES':
+            return {...state, loading:false, issueList:action.payload};
+        case 'GET_REPO_PULLS':
+            return {...state, loading:false, pullList:action.payload};
+        case 'GET_REPO_DETAIL':
+            return {...state, loading:false, repoDetail:action.payload};
         default:
             return state;
     }
 }
-
-export const reducers = combineReducers({
-    repos,
-}); 

@@ -1,0 +1,67 @@
+body{
+  font-family: Arial, Helvetica, sans-serif;
+}
+.repo-list-wrapper, .repo-detail-wrapper, .issue-wrapper, .pull-requests-wrapper{
+  width: 500px;
+  margin: 20px auto;
+}
+.item{
+  padding: 10px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  margin-bottom:10px;
+  border-radius: 10px;
+}
+.item .description{
+  color:#666;
+  font-size:12px;
+  margin-top: 5px;
+}
+.item .info-item{
+  color:#333;
+  font-weight: 600;
+  margin-left:10px;
+}
+.item .sub-info{
+  margin-top: 5px;
+}
+.item .sub-info .info-item{
+  font-size:12px;
+  color:#666;
+  font-weight: 600;
+  margin-left:0;
+}
+.item .info-item .icon{
+  font-size: 12px;
+  margin-right: 5px;
+}
+.table-label{
+  font-weight: 600;
+}
+.pagination{
+  margin-top: 10px;
+}
+.pagination .first-link, .last-link, .next-link, .prev-link{
+  color: #fff;
+  border: 1px solid #333;
+  background: #333;
+  margin-left: 10px;
+  text-decoration: none;
+  border-radius: 5px;
+  height: 30px;
+  line-height: 27px;
+  display: inline-block;
+  padding: 0 10px;
+}
+.pagination .active-page{
+  color: #333;
+  border: 1px solid #333;
+  background: #fff;
+  margin-left: 10px;
+  text-decoration: none;
+  border-radius: 5px;
+  height: 30px;
+  line-height: 27px;
+  display: inline-block;
+  padding: 0 10px;
+}
